@@ -1,0 +1,3 @@
+falke8
+mypy
+.env
