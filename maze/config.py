@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import sys
 import random
 
@@ -315,3 +316,6 @@ def display_maze_final(maze, entry, exit):
 
 if __name__ == "__main__":
     main()
+=======
+"""parsing"""
+>>>>>>> refs/remotes/origin/main
