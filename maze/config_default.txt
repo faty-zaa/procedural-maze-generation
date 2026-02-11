@@ -9,7 +9,9 @@
 
 #this is comments
 
-
-entry =  20y
-
+wIDTH= 20
+ENTRY= 9 ,0
+EXIT= 71,8
+OUTPUT_FILE=maze.txt
+PERFECT=True
 HEIGHT = 100
