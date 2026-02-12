@@ -1,0 +1,11 @@
+
+WIDTH=13
+
+
+#bouyb
+
+HEIGHT = 13
+ENTRY=0,0
+EXIT=9,9
+PERFECT=True
+OUTPUT_FILE=maze.txt
