@@ -14,7 +14,7 @@ def main():
     try:
         validate_config(config)
     except Exception as e:
-        print("Error:", e)
+        print(e)
         return
 
     gen = MazeGenerator(

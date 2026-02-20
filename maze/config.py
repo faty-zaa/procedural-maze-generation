@@ -17,13 +17,16 @@ def parse_config(filename: str) -> dict:
                     print("The configuration file must contain one ‘KEY=VALUE‘"
                           "pair per line.")
                     sys.exit(1)
-            # print(type(config))
-            # print(config)
+    except PermissionError as e:
+        print("Error:", e.args[1])
+        sys.exit(1)
+
+    except FileNotFoundError as e:
+        print("Error:", e.args[1])
+        sys.exit(1)
+
     except Exception as e:
-        print("Error:", e.args[0])
-        # print(type(e))
-        # print(type(e.args))
-        # print(len(e.args))
+        print("Error:", e)
         sys.exit(1)
     return config
 

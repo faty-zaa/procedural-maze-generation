@@ -1,11 +1,8 @@
-
 WIDTH=13
-
-
-#bouyb
-
 HEIGHT = 13
 ENTRY=0,0
-EXIT=9,9
-PERFECT=True
-OUTPUT_FILE=maze.txt
+exit=9,9
+PERFECT=truE
+OUTPUT_FILE=/root
+WIDTH=11
+
