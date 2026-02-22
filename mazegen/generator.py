@@ -18,7 +18,7 @@ class MazeGenerator:
         height: int,
         entry: Tuple[int, int],
         exit: Tuple[int, int],
-        perfect: bool = True,
+        perfect: bool,
         seed: int | None = None
     ):
         self.width = width
@@ -30,7 +30,7 @@ class MazeGenerator:
         # if seed is not None:
         #     random.seed(seed)
 
-        self.maze: Maze = self.create_maze()
+        self.maze = self.create_maze()
         # print(type(self.maze))
 
     # =====================

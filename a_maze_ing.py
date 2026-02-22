@@ -7,15 +7,17 @@ from mazegen.generator import MazeGenerator
 def main():
     if len(sys.argv) != 2:
         print("Usage: python3 a_maze_ing.py config.txt")
-        return
+        sys.exit(1)
 
     config = parse_config(sys.argv[1])
+    # print(type(config))
+    # print(config)
 
     try:
         validate_config(config)
     except Exception as e:
         print(e)
-        return
+        sys.exit(1)
 
     gen = MazeGenerator(
         config["WIDTH"],
@@ -30,7 +32,7 @@ def main():
     # print(blocked)
     if config["ENTRY"] in blocked or config["EXIT"] in blocked:
         print("ENTRY or EXIT inside 42 block")
-        return
+        sys.exit(1)
 
     x, y = config["ENTRY"]
     gen.carve(x, y)

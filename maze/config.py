@@ -42,8 +42,9 @@ def validate_config(config: dict):
     }
     # print(type(importance_keys))
     is_keys = []
-    for a in config:
+    for a in config.keys():
         is_keys.append(a)
+    # print(is_keys)
 
     for a in importance_keys:
         if a not in is_keys:
@@ -62,9 +63,9 @@ def validate_config(config: dict):
     config["HEIGHT"] = height
 
 # -------------------------------
-# enrty : -->
+# entry : -->
 
-    entry = config["ENTRY"].split(',', 1)
+    entry = config["ENTRY"].split(',')
     if len(entry) != 2:
         raise ValueError("ENTRY must be in format x,y")
 
@@ -86,10 +87,9 @@ def validate_config(config: dict):
 
     coord = (x, y)
     config["ENTRY"] = coord
-
 # ----------------------------------------------------
 # exit : -->
-    exit = config["EXIT"].split(',', 1)
+    exit = config["EXIT"].split(',')
     if len(exit) != 2:
         raise ValueError("EXIT must be in format x,y")
     try:

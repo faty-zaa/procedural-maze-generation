@@ -4,7 +4,7 @@ import os
 
 
 def display_maze_final(maze, entry, exit):
-    os.system("clear")
+    # os.system("clear")
     height = len(maze)
     width = len(maze[0])
 
