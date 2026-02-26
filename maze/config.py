@@ -92,7 +92,7 @@ def ft_parsing(filename):
     except ValueError as e:
         print(e)
     except Exception as e:
-        print(f"Error: {e.args[1]}")
+        print(f"Error: {e}")
 
 
 if __name__ == "__main__":
