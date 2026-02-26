@@ -36,6 +36,9 @@ def main():
 
     x, y = config["ENTRY"]
     gen.carve(x, y)
+    path = gen.bfs_shortest_path()
+    for x, y in path:
+        gen.maze[y][x]["path"] = True
     display_maze_final(gen.maze, config["ENTRY"], config["EXIT"])
     # print(gen.maze)
 

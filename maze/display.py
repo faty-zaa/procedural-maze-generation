@@ -22,6 +22,7 @@ def display_maze_final(maze, entry, exit):
     for y in range(height):
         row_str = WALL
         for x in range(width):
+            cell = maze[y][x]
             has_top = maze[y-1][x]["walls"]["bottom"]
             has_left = maze[y][x-1]["walls"]["right"]
             has_right = maze[y][x]["walls"]["right"]
@@ -33,6 +34,8 @@ def display_maze_final(maze, entry, exit):
                 row_str += "🏐"
             elif x == exit_x and y == exit_y:
                 row_str += "🥅"
+            elif cell.get("path"):
+                row_str += "🔹"
             else:
                 row_str += "  "
             if maze[y][x]["walls"]["right"]:
