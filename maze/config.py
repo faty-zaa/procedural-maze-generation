@@ -3,6 +3,7 @@ import sys
 
 def parse_config(filename: str) -> dict:
     config = {}
+    check_deplicat = []
 
     try:
         with open(filename, "r") as f:
@@ -12,11 +13,26 @@ def parse_config(filename: str) -> dict:
                     continue
                 try:
                     key, value = line.split("=", 1)
+                    if value == "":
+                        raise ValueError("Error")
                     config[key.upper().strip()] = value.strip()
+                    check_deplicat.append(key.upper().strip())
                 except Exception:
                     print("The configuration file must contain one ‘KEY=VALUE‘"
                           "pair per line.")
                     sys.exit(1)
+            # print(check_deplicat)
+            # look hna check dail deplicat
+            n = len(check_deplicat)
+            for i in range(n):
+                for j in range(i + 1, n):
+                    a = check_deplicat[i]
+                    b = check_deplicat[j]
+                    if a == b:
+                        print(f"Error: "
+                              f"Duplicate key found: '{check_deplicat[i]}'")
+                        sys.exit(1)
+            return config
     except PermissionError as e:
         print("Error:", e.args[1])
         sys.exit(1)
@@ -40,14 +56,23 @@ def validate_config(config: dict):
         "PERFECT",
         "OUTPUT_FILE"
     }
-    # print(type(importance_keys))
+    seed = {"SEED"}
+
     is_keys = []
-    for a in config:
+
+    for a in config.keys():
         is_keys.append(a)
 
     for a in importance_keys:
         if a not in is_keys:
             raise ValueError(f"Error: missing required key '{a}'")
+
+    for a in is_keys:
+        if a in seed:
+            try:
+                int(config["SEED"])
+            except ValueError:
+                raise ValueError("SEED must be integr Value")
 
     try:
         width = int(config["WIDTH"])
@@ -124,3 +149,12 @@ def validate_config(config: dict):
         config["PERFECT"] = False
     else:
         raise ValueError("PERFECT must be 'True' or 'False'")
+# -------------------------------chek output fi;le
+
+    value = config["OUTPUT_FILE"].split('.', 1)
+    if len(value) != 2:
+        raise ValueError("Error: 'OUTPUT_FILE' value must "
+                         "follow the pattern 'filename.txt'")
+    if value[1] != "txt":
+        raise ValueError("OUTPUT_FILE must be a '.txt' "
+                         "file (Example: 'output.txt'")

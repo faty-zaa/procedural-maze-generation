@@ -3,22 +3,26 @@ import random
 import os
 
 
-def display_maze_final(maze, entry, exit):
+def display_maze_final(maze, entry, exit, flage):
     os.system("clear")
     height = len(maze)
     width = len(maze[0])
 
     BLUE_BLOCK = "\033[41m  \033[0m"
-    color_codes = ["\033[41m", "\033[42m", "\033[43m", "\033[44m", "\033[45m",
+    color_codes = ["\033[42m", "\033[43m", "\033[44m", "\033[45m",
                    "\033[46m"]
     chosen_color = random.choice(color_codes)
+
     BLOCK = f"{chosen_color}  \033[0m"
-    WALL = BLOCK
+    if flage == 1:
+        WALL = "██"
+    else:
+        WALL = BLOCK
 
     entry_x, entry_y = entry
     exit_x, exit_y = exit
 
-    print(BLOCK * (width * 2 + 1))
+    print(WALL * (width * 2 + 1))
     for y in range(height):
         row_str = WALL
         for x in range(width):
@@ -36,15 +40,15 @@ def display_maze_final(maze, entry, exit):
             else:
                 row_str += "  "
             if maze[y][x]["walls"]["right"]:
-                row_str += BLOCK
+                row_str += WALL
             else:
                 row_str += "  "
         print(row_str)
 
-        bottom_str = BLOCK
+        bottom_str = WALL
         for x in range(width):
             if maze[y][x]["walls"]["bottom"]:
-                bottom_str += BLOCK
+                bottom_str += WALL
             else:
                 bottom_str += "  "
 
@@ -54,7 +58,7 @@ def display_maze_final(maze, entry, exit):
                 or (y + 1 < height and maze[y+1][x]["walls"]["right"])
                 or (x + 1 < width and maze[y][x+1]["walls"]["bottom"])
             ):
-                bottom_str += BLOCK
+                bottom_str += WALL
             else:
 
                 bottom_str += "  "

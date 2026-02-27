@@ -1,8 +1,10 @@
-WIDTH=13
-HEIGHT = 13
-ENTRY=0,0
-exit=9,9
-PERFECT=truE
-OUTPUT_FILE=/root
-WIDTH=11
+WIDTH= 23
+PERFECT=false
+HEIGHT = 24
+ENTRY=0,0 
+exit=0,6 
+
+OUTPUT_FILE=ftshte.txt
+
+seeD= 3
 

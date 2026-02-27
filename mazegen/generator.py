@@ -55,7 +55,7 @@ class MazeGenerator:
 
         return grad
 
-    # =====================
+    # ba3333333333333333333333333
 
     def _get_unvisited_neighbors(self, x: int, y: int):
         neighbors = []
@@ -71,7 +71,7 @@ class MazeGenerator:
 
         return neighbors
 
-    # =====================
+    # ba33333333333333333333333333
 
     def carve(self, x: int, y: int):
         self.maze[y][x]["visited"] = True
@@ -127,3 +127,47 @@ class MazeGenerator:
                     blocked.add((cell_x, cell_y))
 
         return blocked
+# hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
+
+    def add_loops(self, extra_walls):
+        height = self.height
+        width = self.width
+
+        removed = 0
+
+        while removed < extra_walls:
+            x = random.randint(0, width - 1)
+            y = random.randint(0, height - 1)
+
+            directions = []
+
+            if y > 0:
+                directions.append(("top", x, y - 1))
+            if y < height - 1:
+                directions.append(("bottom", x, y + 1))
+            if x > 0:
+                directions.append(("left", x - 1, y))
+            if x < width - 1:
+                directions.append(("right", x + 1, y))
+
+            direction, nx, ny = random.choice(directions)
+
+            if direction == "top" and self.maze[y][x]["walls"]["top"]:
+                self.maze[y][x]["walls"]["top"] = False
+                self.maze[ny][nx]["walls"]["bottom"] = False
+                removed += 1
+
+            elif direction == "bottom" and self.maze[y][x]["walls"]["bottom"]:
+                self.maze[y][x]["walls"]["bottom"] = False
+                self.maze[ny][nx]["walls"]["top"] = False
+                removed += 1
+
+            elif direction == "left" and self.maze[y][x]["walls"]["left"]:
+                self.maze[y][x]["walls"]["left"] = False
+                self.maze[ny][nx]["walls"]["right"] = False
+                removed += 1
+
+            elif direction == "right" and self.maze[y][x]["walls"]["right"]:
+                self.maze[y][x]["walls"]["right"] = False
+                self.maze[ny][nx]["walls"]["left"] = False
+                removed += 1
