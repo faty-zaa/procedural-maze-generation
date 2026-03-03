@@ -1,24 +1,24 @@
 """mlx or ascii"""
-import random
 import os
+import time
+from mazegen.types import Maze
 
 
-# <<<<<<< HEAD
-def display_maze_final(maze, entry, exit, flage):
+def display_maze_final(
+    maze: Maze,
+    entry: tuple[int, int],
+    exit: tuple[int, int],
+    flage: int,
+    p_flage: int,
+    chosen_color: str
+) -> None:
     os.system("clear")
-# =======
-def display_maze_final(maze, entry, exit):
-    # os.system("clear")
-# >>>>>>> e39d3a50d05cc55e21c76988ba85c1eb6a291924
     height = len(maze)
     width = len(maze[0])
 
     BLUE_BLOCK = "\033[41m  \033[0m"
-    color_codes = ["\033[42m", "\033[43m", "\033[44m", "\033[45m",
-                   "\033[46m"]
-    chosen_color = random.choice(color_codes)
-
     BLOCK = f"{chosen_color}  \033[0m"
+
     if flage == 1:
         WALL = "██"
     else:
@@ -39,16 +39,24 @@ def display_maze_final(maze, entry, exit):
 
             if has_top and has_bottom and has_left and has_right:
                 row_str += BLUE_BLOCK
+                time.sleep(0.01)
             elif x == entry_x and y == entry_y:
-                row_str += "🏐"
+                time.sleep(0.02)
+                row_str += "👳"
             elif x == exit_x and y == exit_y:
-                row_str += "🥅"
-            elif cell.get("path"):
-                row_str += "🔹"
+                time.sleep(0.02)
+                row_str += "🕋"
+            elif cell.get("path") and p_flage != 0:
+                row_str += "✨"
+                print(row_str, end="\r", flush=True)
+                time.sleep(0.03)
+                row_str = row_str[:-1] + "🐫"
             else:
                 row_str += "  "
+                time.sleep(0.001)
             if maze[y][x]["walls"]["right"]:
                 row_str += WALL
+                time.sleep(0.001)
             else:
                 row_str += "  "
         print(row_str)

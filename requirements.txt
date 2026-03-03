@@ -1,2 +1,0 @@
-falke8
-mypy

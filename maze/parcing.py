@@ -3,7 +3,7 @@ import sys
 
 def parse_config(filename: str) -> dict:
     config = {}
-    check_deplicat = []
+    check_duplicat = []
 
     try:
         with open(filename, "r") as f:
@@ -16,21 +16,19 @@ def parse_config(filename: str) -> dict:
                     if value == "":
                         raise ValueError("Error")
                     config[key.upper().strip()] = value.strip()
-                    check_deplicat.append(key.upper().strip())
+                    check_duplicat.append(key.upper().strip())
                 except Exception:
                     print("The configuration file must contain one ‘KEY=VALUE‘"
                           "pair per line.")
                     sys.exit(1)
-            # print(check_deplicat)
-            # look hna check dail deplicat
-            n = len(check_deplicat)
+            n = len(check_duplicat)
             for i in range(n):
                 for j in range(i + 1, n):
-                    a = check_deplicat[i]
-                    b = check_deplicat[j]
+                    a = check_duplicat[i]
+                    b = check_duplicat[j]
                     if a == b:
                         print(f"Error: "
-                              f"Duplicate key found: '{check_deplicat[i]}'")
+                              f"Duplicate key found: '{check_duplicat[i]}'")
                         sys.exit(1)
             return config
     except PermissionError as e:
@@ -47,7 +45,7 @@ def parse_config(filename: str) -> dict:
     return config
 
 
-def validate_config(config: dict):
+def validate_config(config: dict, filename: str) -> None:
     importance_keys = {
         "WIDTH",
         "HEIGHT",
@@ -59,13 +57,9 @@ def validate_config(config: dict):
     seed = {"SEED"}
 
     is_keys = []
-# <<<<<<< HEAD
 
-# =======
-# >>>>>>> e39d3a50d05cc55e21c76988ba85c1eb6a291924
     for a in config.keys():
         is_keys.append(a)
-    # print(is_keys)
 
     for a in importance_keys:
         if a not in is_keys:
@@ -86,14 +80,16 @@ def validate_config(config: dict):
 
     if width <= 0 or height <= 0:
         raise ValueError("WIDTH and HEIGHT must be > 0")
+    if width > 100 or height > 100:
+        raise ValueError("WIDTH and HEIGHT must be < 100")
 
     config["WIDTH"] = width
     config["HEIGHT"] = height
 
 # -------------------------------
-# entry : -->
+# enrty : -->
 
-    entry = config["ENTRY"].split(',')
+    entry = config["ENTRY"].split(',', 1)
     if len(entry) != 2:
         raise ValueError("ENTRY must be in format x,y")
 
@@ -115,9 +111,10 @@ def validate_config(config: dict):
 
     coord = (x, y)
     config["ENTRY"] = coord
+
 # ----------------------------------------------------
 # exit : -->
-    exit = config["EXIT"].split(',')
+    exit = config["EXIT"].split(',', 1)
     if len(exit) != 2:
         raise ValueError("EXIT must be in format x,y")
     try:
@@ -153,7 +150,9 @@ def validate_config(config: dict):
     else:
         raise ValueError("PERFECT must be 'True' or 'False'")
 # -------------------------------chek output fi;le
-
+    if config["OUTPUT_FILE"] == filename:
+        raise ValueError("the config filename can't be "
+                         "the same as the output filename")
     value = config["OUTPUT_FILE"].split('.', 1)
     if len(value) != 2:
         raise ValueError("Error: 'OUTPUT_FILE' value must "

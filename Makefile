@@ -6,13 +6,13 @@ install:
 	pip install -r requirements.txt || true
 
 run:
-	$(PYTHON) $(MAIN) $(CONFIG) || true
+	@$(PYTHON) $(MAIN) $(CONFIG) || true
 
 debug:
-	$(PYTHON) -m pdb $(MAIN) $(CONFIG) || true
+	@$(PYTHON) -m pdb $(MAIN) $(CONFIG) || true
 
 clean:
-	rm -rf __pycache__ .mypy_cache
+	@rm -rf __pycache__ .mypy_cache mazegen/__pycache__ maze/__pycache__ output.txt
 
 lint:
 	python3 -m flake8
