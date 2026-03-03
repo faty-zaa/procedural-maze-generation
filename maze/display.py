@@ -3,8 +3,13 @@ import random
 import os
 
 
+# <<<<<<< HEAD
 def display_maze_final(maze, entry, exit, flage):
     os.system("clear")
+# =======
+def display_maze_final(maze, entry, exit):
+    # os.system("clear")
+# >>>>>>> e39d3a50d05cc55e21c76988ba85c1eb6a291924
     height = len(maze)
     width = len(maze[0])
 
@@ -26,6 +31,7 @@ def display_maze_final(maze, entry, exit, flage):
     for y in range(height):
         row_str = WALL
         for x in range(width):
+            cell = maze[y][x]
             has_top = maze[y-1][x]["walls"]["bottom"]
             has_left = maze[y][x-1]["walls"]["right"]
             has_right = maze[y][x]["walls"]["right"]
@@ -37,6 +43,8 @@ def display_maze_final(maze, entry, exit, flage):
                 row_str += "🏐"
             elif x == exit_x and y == exit_y:
                 row_str += "🥅"
+            elif cell.get("path"):
+                row_str += "🔹"
             else:
                 row_str += "  "
             if maze[y][x]["walls"]["right"]:

@@ -2,6 +2,7 @@
 
 import random
 from typing import List, Tuple, Dict, Set
+from collections import deque
 
 Cell = Dict[str, object]
 Maze = List[List[Cell]]
@@ -18,7 +19,7 @@ class MazeGenerator:
         height: int,
         entry: Tuple[int, int],
         exit: Tuple[int, int],
-        perfect: bool = True,
+        perfect: bool,
         seed: int | None = None
     ):
         self.width = width
@@ -30,7 +31,7 @@ class MazeGenerator:
         # if seed is not None:
         #     random.seed(seed)
 
-        self.maze: Maze = self.create_maze()
+        self.maze = self.create_maze()
         # print(type(self.maze))
 
     # =====================
@@ -48,7 +49,9 @@ class MazeGenerator:
                         "left": True,
                         "right": True
                     },
-                    "visited": False
+                    "visited": False,
+                    "visited_bfs" : False,
+                    "path": False
                 }
                 row.append(cell)
             grad.append(row)
@@ -95,6 +98,48 @@ class MazeGenerator:
 
             self.carve(nx, ny)
             neighbors = self._get_unvisited_neighbors(x, y)
+
+    def get_neighbors(self, x: int, y: int):
+        neighbors = []
+        cell = self.maze[y][x]
+        if not cell["walls"]["top"] and y > 0:
+            neighbors.append((x, y - 1))
+        if not cell["walls"]["bottom"] and y < self.height - 1:
+            neighbors.append((x, y + 1))
+        if not cell["walls"]["left"] and x > 0:
+            neighbors.append((x - 1, y))
+        if not cell["walls"]["right"] and x < self.width - 1:
+            neighbors.append((x + 1, y))
+        return neighbors
+
+    def bfs_shortest_path(self):
+        start = self.entry
+        end = self.exit
+        is_exit = False
+        queue = deque([start])
+        self.maze[start[1]][start[0]]["visited_bfs"] = True
+        parent = {start: None}
+
+        while queue:
+            x, y = queue.popleft()
+            if (x, y) == end:
+                is_exit = True
+                break
+            for nx, ny in self.get_neighbors(x, y):
+                if not self.maze[ny][nx]["visited_bfs"]:
+                    queue.append((nx, ny))
+                    self.maze[ny][nx]["visited_bfs"] = True
+                    parent[(nx, ny)] = (x, y)
+
+        if not is_exit:
+            return [] 
+        path = []
+        new_cell = end
+        while new_cell is not None:
+            path.append(new_cell)
+            new_cell = parent[new_cell]
+        path.reverse()
+        return path
 
     # =====================
 

@@ -10,15 +10,21 @@ def main():
     sys.setrecursionlimit(200000)
     if len(sys.argv) != 2:
         print("Usage: python3 a_maze_ing.py config.txt")
-        return
+        sys.exit(1)
 
     config = parse_config(sys.argv[1])
+<<<<<<< HEAD
     # print(config)
+=======
+    # print(type(config))
+    # print(config)
+
+>>>>>>> e39d3a50d05cc55e21c76988ba85c1eb6a291924
     try:
         validate_config(config)
     except Exception as e:
         print(e)
-        return
+        sys.exit(1)
 
     gen = MazeGenerator(
         config["WIDTH"],
@@ -31,7 +37,7 @@ def main():
     blocked = gen.place_42_block()
     if config["ENTRY"] in blocked or config["EXIT"] in blocked:
         print("ENTRY or EXIT inside 42 block")
-        return
+        sys.exit(1)
 
     if config.get("SEED") is not None:
         random.seed(config["SEED"])
@@ -43,6 +49,7 @@ def main():
         # ghir global random generator dail library
     x, y = config["ENTRY"]
     gen.carve(x, y)
+<<<<<<< HEAD
     # hna alme3alem fin machi perfect
     if not config["PERFECT"]:
         gen.add_loops(6)
@@ -118,6 +125,13 @@ def main():
         except (KeyboardInterrupt, EOFError):
             print("\n\n🛑 Program interrupted. Exiting safely...")
             sys.exit(1)
+=======
+    path = gen.bfs_shortest_path()
+    for x, y in path:
+        gen.maze[y][x]["path"] = True
+    display_maze_final(gen.maze, config["ENTRY"], config["EXIT"])
+    # print(gen.maze)
+>>>>>>> e39d3a50d05cc55e21c76988ba85c1eb6a291924
 
 
 if __name__ == "__main__":
