@@ -1,4 +1,4 @@
-"""mlx or ascii"""
+"""Display maze in terminal with colors and animations."""
 import os
 import time
 from mazegen.types import Maze
@@ -12,6 +12,16 @@ def display_maze_final(
     p_flage: int,
     chosen_color: str
 ) -> None:
+    """Display the maze with entry, exit, and optional path.
+    
+    Args:
+        maze: The maze grid to display
+        entry: Starting position (x, y)
+        exit: Ending position (x, y)
+        flage: Flag for wall display mode
+        p_flage: Flag to show path or not
+        chosen_color: Color code for walls
+    """
     os.system("clear")
     height = len(maze)
     width = len(maze[0])

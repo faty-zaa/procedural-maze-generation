@@ -1,10 +1,12 @@
+"""Type definitions for maze structures."""
 from typing import TypedDict
 
 # TypeDict is a comming from typing
-# and him work is a gev type structure for dict
+
 
 
 class Walls(TypedDict):
+    """Represents walls around a cell (top, bottom, left, right)."""
     top: bool
     bottom: bool
     left: bool
@@ -12,11 +14,13 @@ class Walls(TypedDict):
 
 
 class Cell(TypedDict):
+    """Represents a single cell in the maze grid."""
     visited: bool
     visited_bfs: bool
     walls: Walls
 
 
+# Maze is a 2D grid of cells
 Maze = list[list[Cell]]
 
 # for fytiza

@@ -1,7 +1,16 @@
+"""Parse and validate configuration files for maze generation."""
 import sys
 
 
 def parse_config(filename: str) -> dict:
+    """Read and parse the configuration file.
+    
+    Args:
+        filename: Path to configuration file
+        
+    Returns:
+        dict: Configuration settings as key-value pairs
+    """
     config = {}
     check_duplicat = []
 
@@ -46,6 +55,12 @@ def parse_config(filename: str) -> dict:
 
 
 def validate_config(config: dict, filename: str) -> None:
+    """Check if configuration has all required keys and valid values.
+    
+    Args:
+        config: Configuration dictionary to validate
+        filename: Name of the configuration file
+    """
     importance_keys = {
         "WIDTH",
         "HEIGHT",

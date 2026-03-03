@@ -34,6 +34,7 @@ class MazeGenerator:
     # =====================
 
     def create_maze(self) -> Maze:
+        """Create an empty maze grid with all walls up."""
         grad = []
 
         for f in range(self.height):
@@ -57,6 +58,7 @@ class MazeGenerator:
     # ba3333333333333333333333333
 
     def _get_unvisited_neighbors(self, x: int, y: int) -> List:
+        """Get list of unvisited neighbor cells."""
         neighbors = []
 
         if y > 0 and not self.maze[y - 1][x]["visited"]:
@@ -73,6 +75,7 @@ class MazeGenerator:
     # ba33333333333333333333333333
 
     def carve(self, x: int, y: int) -> None:
+        """Carve paths through the maze recursively."""
         self.maze[y][x]["visited"] = True
         neighbors = self._get_unvisited_neighbors(x, y)
 
@@ -98,6 +101,7 @@ class MazeGenerator:
     # =====================
 
     def place_42_block(self) -> Set[Tuple[int, int]]:
+        """Place a '42' ASCII art block in the center of maze."""
         blocked = set()
 
         if self.width <= 10 or self.height <= 10:
@@ -130,7 +134,7 @@ class MazeGenerator:
 # --------------------------------------
 
     def break_continuous_walls(self) -> None:
-
+        """Break long continuous walls to create imperfect maze."""
         for y in range(1, self.height - 1):
             wall_count = 0
             start_x = 0
@@ -168,6 +172,7 @@ class MazeGenerator:
 # --------------------------------------
 
     def get_neighbors(self, x: int, y: int) -> list:
+        """Get accessible neighbor cells (no walls between)."""
         neighbors = []
         cell = self.maze[y][x]
         if not cell["walls"]["top"] and y > 0:
@@ -181,11 +186,17 @@ class MazeGenerator:
         return neighbors
 
     def _reset_bfs_visited(self) -> None:
+        """Reset BFS visited flags for all cells."""
         for row in self.maze:
             for cell in row:
                 cell["visited_bfs"] = False
 
     def bfs_shortest_path(self) -> list:
+        """Find shortest path from entry to exit using BFS.
+        
+        Returns:
+            List of coordinates (x, y) representing the path
+        """
         self._reset_bfs_visited()
         start = self.entry
         end = self.exit
@@ -218,6 +229,11 @@ class MazeGenerator:
         return path
 
     def write_output(self, filename: str) -> None:
+        """Write maze data to output file.
+        
+        Args:
+            filename: Path to output file
+        """
         try:
             with open(filename, "w") as f:
                 for y in range(self.height):

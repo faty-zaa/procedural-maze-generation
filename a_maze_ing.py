@@ -8,6 +8,7 @@ from mazegen.generator import MazeGenerator
 
 
 def main() -> None:
+    """Main function to generate and display interactive maze."""
     original_maze = None
     sys.setrecursionlimit(200000)
     if len(sys.argv) != 2:
